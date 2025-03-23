@@ -64,3 +64,5 @@ Feel free to open an issue or submit a pull request!
 ---
 Let me know if you need modifications before pushing this to GitHub! 🚀
 
+documention 
+[PROJECT IDEAS_ (1).pdf](https://github.com/user-attachments/files/19407359/PROJECT.IDEAS_.1.pdf)
