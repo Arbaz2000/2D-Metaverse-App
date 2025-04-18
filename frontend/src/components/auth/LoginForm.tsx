@@ -7,15 +7,39 @@ export function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    // TODO: Implement actual login logic
-    console.log('Login attempt:', { email, password });
-    // For now, just navigate to the game
-    navigate('/');
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Login failed');
+      }
+
+      // Store the token in localStorage
+      localStorage.setItem('token', data.token);
+      
+      // Navigate to the game
+      navigate('/');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Login failed');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleTempLogin = () => {
@@ -80,6 +104,7 @@ export function LoginForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                disabled={isLoading}
                 sx={{
                   '& .MuiOutlinedInput-root': {
                     '&:hover fieldset': {
@@ -96,6 +121,7 @@ export function LoginForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                disabled={isLoading}
                 sx={{
                   '& .MuiOutlinedInput-root': {
                     '&:hover fieldset': {
@@ -109,6 +135,7 @@ export function LoginForm() {
                 fullWidth
                 variant="contained"
                 size="large"
+                disabled={isLoading}
                 sx={{ 
                   mt: 3,
                   py: 1.5,
@@ -122,7 +149,7 @@ export function LoginForm() {
                   },
                 }}
               >
-                Login
+                {isLoading ? 'Logging in...' : 'Login'}
               </Button>
             </form>
             
