@@ -1,0 +1,19 @@
+{
+  "name": "2d-metaverse",
+  "version": "1.0.0",
+  "description": "A 2D Metaverse application built with MERN stack",
+  "scripts": {
+    "install-all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "frontend": "cd frontend && npm run dev",
+    "backend": "cd backend && npm run dev",
+    "dev": "concurrently \"npm run frontend\" \"npm run backend\"",
+    "build": "cd frontend && npm run build",
+    "test": "cd frontend && npm run test && cd ../backend && npm run test"
+  },
+  "keywords": ["metaverse", "2d", "mern", "react", "nodejs"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+} 
